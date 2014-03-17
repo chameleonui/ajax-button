@@ -36,6 +36,9 @@ For now, more you can learn from `example.html`.
 ```jss
 method: 'POST',
 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+data: function() {
+    return window.encodeURIComponent(document.querySelectorAll('#data-for-post')[0].name) + '=' + window.encodeURIComponent(document.querySelectorAll('#data-for-post')[0].value);
+},
 callback: function (xhrResponse) {
     return xhrResponse.status >= 200 && xhrResponse.status <= 399;
 },
@@ -53,7 +56,8 @@ states: {
 }
 ```
 
-* **callback** - Function returning boolean true|false. xhrResponse is full response, xhrResponse.status is returned status 
+* **data** - Function for geting actual data, called everytime when sending xhr request.
+* **callback** - Function returning boolean true|false. xhrResponse is full response, xhrResponse.status is returned status
 
 
 ## ToDo
