@@ -1,0 +1,20 @@
+{
+  "name": "ajax-button",
+  "repo": "chameleonui/ajax-button",
+  "description": "Simple 1 state ajax button",
+  "version": "1.0.0",
+  "keywords": [],
+  "dependencies": {
+    "component/jquery": "*",
+    "component/emitter": "*"
+  },
+  "development": {
+    "components/font-awesome": "*",
+    "chameleonui/css3": "*"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js"
+  ]
+}

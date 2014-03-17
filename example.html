@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX Button</title>
+    <link rel="stylesheet" href="./build/build.css">
+    <link rel="stylesheet" href="./example.css">
+</head>
+<body>
+    
+    <h1>AJAX Button Example</h1>
+
+    <div class="listed-buttons">
+        <p>
+            <label for="data-for-post"><em>Insert data</em></label>
+            <input type="text" id="data-for-post" placeholder="add some data here" value="my.email@gmail.com"/>
+        </p>
+        <p>
+            <a href="http://experiments.apiary.io/ajax-button" class="button-primary js-ajax-button"><i class="fa fa-check"></i> Send data</a>
+        </p>
+    </div>
+    <div>
+        <p>
+            <a href="#" class="js-add-button">Add another button instance</a>
+        </p>
+    </div>
+
+    <h2>Used Button Types</h2>
+
+    <p><a href="#" class="button-primary"><i class="fa fa-check"></i> Send data</a></p>
+    <p><a href="#" class="button-disabled"><i class="fa fa-spinner fa-spin"></i></a></p>
+
+    
+    <script src="./build/build.js"></script>
+    <script>
+        var ATB = require('ajax-button');
+        var jQuery = require('component-jquery');
+
+        (function(){
+            var list = jQuery('.listed-buttons');
+
+            jQuery('body').on('click', '.js-add-button', this, function(event) {
+                event.preventDefault();
+                list.append('<p><a href="http://experiments.apiary.io/ajax-button" class="button-primary js-ajax-button"><i class="fa fa-check"></i> Send data</a></p>');
+            });
+            
+        }).call(jQuery);
+
+
+        var acme = function(self) {
+            var _self = this;
+            var postData = document.getElementById('data-for-post').value;
+            var dataObject = {
+                id: 1,
+                email: postData
+            };
+            dataObject = JSON.stringify(dataObject);
+
+            var instance = new ATB({
+                contentType: 'application/json; charset=UTF-8',
+                callback: function (xhrResponse) {
+                    return xhrResponse.status === 200;
+                }
+            });
+
+            instance.init(self, dataObject);
+
+            instance.on('request', function() {
+            });
+
+            instance.on('response', function() {
+            });
+
+            instance.on('error', function() {
+                console.log('error', this.self, this.response);
+            });
+
+            instance.on('success', function() {
+                console.log('success', this.self, this.response);
+            });
+
+        };
+
+        jQuery('body').on('click', '.js-ajax-button', this, function(event) {
+            event.preventDefault();
+            jQuery(this).removeClass('js-ajax-button');
+
+            acme(this);
+        });
+        
+    </script>
+</body>
+</html>
