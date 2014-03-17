@@ -1,6 +1,6 @@
 /**
  * 
- * Action - Toggle Button
+ * AJAX Button
  * 
  */
 
@@ -10,6 +10,9 @@ var Emitter = require('emitter');
 var defaults = {
     method: 'POST',
     contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+    data: function() {
+        return window.encodeURIComponent('data');
+    },
     callback: function (xhrResponse) {
         return xhrResponse.status >= 200 && xhrResponse.status <= 399;
     },
@@ -17,7 +20,7 @@ var defaults = {
         stateDefault: {
             content: '<i class="fa fa-check"></i> Send data',
             classes: 'button-primary',
-            title: 'State A'
+            title: 'State Default'
         },
         XHRrequest: {
             content: '<i class="fa fa-spinner fa-spin"></i>',
@@ -35,18 +38,17 @@ function AjaxButton(options) {
     this.response = {};
     this.self;
     this.active = 0;
-    this.postData = {};
+    // this.postData = {};
 }
 
 module.exports = AjaxButton;
 
 Emitter(AjaxButton.prototype);
 
-AjaxButton.prototype.init = function(self, data) {
+AjaxButton.prototype.init = function(self) {
     
     var component = this;
     component.self = self;
-    component.postData = data ? data : {};
 
     component._stateChange('XHRrequest');
 };
@@ -111,7 +113,7 @@ AjaxButton.prototype.XHRrequest = function() {
 
     component.emit('request');
 
-    component._xhr(component.self.getAttribute('href'), component.postData, component.options.contentType, component.options.method, function(xhr){
+    component._xhr(component.self.getAttribute('href'), component.options.data(), component.options.contentType, component.options.method, function(xhr){
 
         component.response = xhr;
         component._XHRresponse();

@@ -1,6 +1,6 @@
 {
   "name": "ajax-button",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple 1 state ajax button",
   "author": "Daniel Sitek (https://github.com/danielsitek)",
   "main": "index.js",

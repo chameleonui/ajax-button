@@ -13,7 +13,7 @@
     <div class="listed-buttons">
         <p>
             <label for="data-for-post"><em>Insert data</em></label>
-            <input type="text" id="data-for-post" placeholder="add some data here" value="my.email@gmail.com"/>
+            <input type="text" id="data-for-post" placeholder="add some data here" name="input-form" value="my.email@gmail.com"/>
         </p>
         <p>
             <a href="http://experiments.apiary.io/ajax-button" class="button-primary js-ajax-button"><i class="fa fa-check"></i> Send data</a>
@@ -49,21 +49,17 @@
 
         var acme = function(self) {
             var _self = this;
-            var postData = document.getElementById('data-for-post').value;
-            var dataObject = {
-                id: 1,
-                email: postData
-            };
-            dataObject = JSON.stringify(dataObject);
 
             var instance = new ATB({
-                contentType: 'application/json; charset=UTF-8',
+                data: function() {
+                    return window.encodeURIComponent(document.querySelectorAll('#data-for-post')[0].name) + '=' + window.encodeURIComponent(document.querySelectorAll('#data-for-post')[0].value);
+                },
                 callback: function (xhrResponse) {
                     return xhrResponse.status === 200;
                 }
             });
 
-            instance.init(self, dataObject);
+            instance.init(self);
 
             instance.on('request', function() {
             });
